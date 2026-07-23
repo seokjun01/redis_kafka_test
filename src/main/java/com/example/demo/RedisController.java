@@ -38,4 +38,10 @@ public class RedisController {
         Long remainSeconds =redisTemplate.getExpire(key, TimeUnit.SECONDS);
         return "남은 유효시간: " + remainSeconds + "초";
     }
+
+    @PostMapping("/publish")
+    public String publish(@RequestParam String message) {
+        redisTemplate.convertAndSend("my-channel", message);
+        return "발행 완료" + message;
+    }
 }
